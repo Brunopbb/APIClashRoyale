@@ -41,7 +41,7 @@ class Main(object):
 
         lines.pop(index)
 
-        string = ("%s %s %s %s %s\n"%(player["tag"], player["name"], str(int(player["cardsEarned"]+cards)),
+        string = ("%s %s %s %s %s\n"%(player["tag"], "*"+player["name"]+"*", str(int(player["cardsEarned"]+cards)),
                                     str(int(player["wins"]+wins)), str(int(points+self.__addPoint(ind)))))
 
 
@@ -83,7 +83,7 @@ class Main(object):
             for i in range(3):
                 if self.__playerVerification(str(self.infoLogWar.iloc[i]["tag"])):
                     self.infoLogWar.iloc[i, 4] = self.__addPoint(i)
-                    file.write("%s %s %i %i %i\n"%(self.infoLogWar.iloc[i]["tag"], self.infoLogWar.iloc[i]["name"],
+                    file.write("%s %s %i %i %i\n"%(self.infoLogWar.iloc[i]["tag"], "*"+self.infoLogWar.iloc[i]["name"]+"*",
                                                  self.infoLogWar.iloc[i]["cardsEarned"], self.infoLogWar.iloc[i]["wins"],
                                                  self.infoLogWar.iloc[i]["Points"]))
 
