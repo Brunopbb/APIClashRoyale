@@ -1,104 +1,106 @@
 import pandas as pd
+import numpy as np
 import requests
 import os
 
-class Data(object):
+
+class Request(object):
 
     def __init__(self):
-
         self.logWarUrl = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/warlog"
-        self.infoMembers = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/members"
-        self.login = {'Accept': 'application/json', 'authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM4YjBhNGFhLTFhNmMtNDE5Mi05MGM2LTJhNDI2YmMxNzVjYSIsImlhdCI6MTU5MDMzOTc5Nywic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc2LjEzMSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.qMnGABq4K9IQZh6lsy4bKMNYCvX94qQ5HWeQVLYBPodlU-XZb4lM8LrU6HcI0y-AVjxQNQ_1hsyHHYWq3nA8gQ'}
 
-    def __getInfoWar(self):
+        self.login = {'Accept': 'application/json',
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM4YjBhNGFhLTFhNmMtNDE5Mi05MGM2LTJhNDI2YmMxNzVjYSIsImlhdCI6MTU5MDMzOTc5Nywic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc2LjEzMSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.qMnGABq4K9IQZh6lsy4bKMNYCvX94qQ5HWeQVLYBPodlU-XZb4lM8LrU6HcI0y-AVjxQNQ_1hsyHHYWq3nA8gQ'}
 
+    def getInfoWar(self):
         return requests.get(self.logWarUrl, self.login).json()
 
-    def getInfoMembers(self):
 
-        return requests.get(self.infoMembers, self.login).json()
+class dataProcessing(object):
 
-    def dataProcessing(self):
+    def __init__(self, infoLogWar):
 
-        dataW = pd.DataFrame(self.__getInfoWar()["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        self.__infoLogWar = infoLogWar
 
+    def __settings(self):
+
+        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(
+            ["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         dataW["Points"] = 0
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
 
+    def __verificationFile(self):
 
-class Main(object):
+        if os.path.exists("DataFinal.csv"):
+            return True
+        return False
 
-    def __init__(self, infLogWar):
-        self.infoLogWar = infLogWar
+    def main(self):
 
-    def __reCalculate(self, player, ind):
-        index = None
+        if self.__verificationFile():
 
-        with open("DataFinal.txt", "r") as file:
-            lines = file.readlines()
-            for i in range(len(lines)):
-                if player["tag"] == lines[i].split(" ")[0]:
-                    aux = lines[i].split(" ")
-                    cards, wins, points = int(aux[-3]), int(aux[-2]), int(aux[-1])
-                    index = i
+            self.__addPoints()
+            dfFinal = pd.read_csv("DataFinal.csv").drop("Unnamed: 0", axis=1)
+            self.__verificationPlayer(dfFinal)
 
-        lines.pop(index)
-
-        string = ("%s %s %s %s %s\n"%(player["tag"], "*"+player["name"]+"*", str(int(player["cardsEarned"]+cards)),
-                                    str(int(player["wins"]+wins)), str(int(points+self.__addPoint(ind)))))
+            dfFinal.to_csv("DataFinal.csv")
 
 
-        lines.append(string)
-
-        with open("DataFinal.txt", "w") as file:
-
-            file.writelines(lines)
-
-
-    def __playerVerification(self, tag):
-
-        with open("DataFinal.txt", "r") as file:
-            if os.stat("DataFinal.txt").st_size == 0:
-                return True
-            else:
-                line = file.readlines()
-
-                for i in range(3):
-                    if tag == line[i].split(" ")[0]:
-                        return False
-                    else:
-                        continue
-        return True
-
-    def __addPoint(self, i):
-
-        if i == 0:
-            return 10
-        elif i == 1:
-            return 7
         else:
-            return 5
+
+            self.__saveFile(self.__addPoints())
+
+    def __saveFile(self, file):
+        file.to_csv("DataFinal.csv")
+
+    def __addPoints(self):
+
+        rank = self.__settings()
+
+        rank.iloc[0, 4] += 10
+        rank.iloc[1, 4] += 7
+        rank.iloc[2, 4] += 5
+
+        return rank
+
+    def __verificationPlayer(self, file):
+
+        size = file.shape[0] + 1
+        dfTemp = self.__settings()
+
+        for i in range(dfTemp.shape[0]):
+            if dfTemp.iloc[i]["tag"] not in np.array(file["tag"]):
+                file.loc[size] = dfTemp.iloc[i]
+                size += 1
+            else:  # ESSE ELSE PODE SER MELHORADO
+                if i == 0:
+                    file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "Points"] += 10
+                elif i == 1:
+                    file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "Points"] += 7
+                elif i == 2:
+                    file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "Points"] += 5
+
+        file.sort_values(by=["Points"], inplace=True, ascending=False)
+
+    '''
+    def updateValues(self, file):
+
+        dfTemp = self.__settings()
+
+        file.set_index("tag", inplace=True)
+        dfTemp.set_index("tag", inplace=True)
+
+        file["wins"] = (file["wins"] + dfTemp["wins"])
+        file["cardsEarned"] = (file["cardsEarned"] + dfTemp["cardsEarned"])
+        file.reset_index(inplace=True)
+
+    '''
 
 
-    def saveInFile(self):
+response = Request()
 
-        with open("DataFinal.txt", 'a') as file:
-            for i in range(3):
-                if self.__playerVerification(str(self.infoLogWar.iloc[i]["tag"])):
-                    self.infoLogWar.iloc[i, 4] = self.__addPoint(i)
-                    file.write("%s %s %i %i %i\n"%(self.infoLogWar.iloc[i]["tag"], "*"+self.infoLogWar.iloc[i]["name"]+"*",
-                                                 self.infoLogWar.iloc[i]["cardsEarned"], self.infoLogWar.iloc[i]["wins"],
-                                                 self.infoLogWar.iloc[i]["Points"]))
+data = dataProcessing(response.getInfoWar())
 
-                else:
-                    self.__reCalculate(self.infoLogWar.iloc[i], i)
+data.main()
 
-
-
-
-response = Data()
-main = Main(response.dataProcessing())
-df = pd.DataFrame(response.getInfoMembers()['items'])
-df.to_csv("Members")
-main.saveInFile()
