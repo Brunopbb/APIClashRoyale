@@ -28,7 +28,7 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(
+        dataW = pd.DataFrame(self.__infoLogWar["items"][0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ]["participants"]).drop(
             ["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         dataW["Points"] = 0
@@ -46,11 +46,14 @@ class dataProcessing(object):
 
     def main(self):
 
+
+
         if self.__verificationFile():
 
-            self.__addPoints()
+            dfAtual = self.__addPoints()
+
             dfFinal = pd.read_csv("DataFinal.csv").drop("Unnamed: 0", axis=1)
-            self.__verificationPlayer(dfFinal)
+            self.__verificationPlayer(dfFinal, dfAtual)
 
             dfFinal.to_csv("DataFinal.csv")
 
@@ -72,11 +75,11 @@ class dataProcessing(object):
 
         return rank
 
-    def __verificationPlayer(self, file):
+    def __verificationPlayer(self, file, dfAtual):
 
         size = file.shape[0] + 1
-        dfTemp = self.__settingsWar()
-
+        dfTemp = dfAtual
+        print(dfTemp)
         for i in range(dfTemp.shape[0]):
             if dfTemp.iloc[i]["tag"] not in np.array(file["tag"]):
                 file.loc[size] = dfTemp.iloc[i]
