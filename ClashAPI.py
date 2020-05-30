@@ -28,7 +28,7 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        dataW = pd.DataFrame(self.__infoLogWar["items"][2]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         dataW["Points"] = 0
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
@@ -76,12 +76,15 @@ class dataProcessing(object):
 
         size = file.shape[0] + 1
         dfTemp = dfAtual
-        print(dfTemp)
         for i in range(dfTemp.shape[0]):
             if dfTemp.iloc[i]["tag"] not in np.array(file["tag"]):
                 file.loc[size] = dfTemp.iloc[i]
                 size += 1
             else:  # ESSE ELSE PODE SER MELHORADO
+
+                file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "wins"] += dfTemp.iloc[i, 3]
+                file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "cardsEarned"] += dfTemp.iloc[i, 2]
+
                 if i == 0:
                     file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "Points"] += 10
                 elif i == 1:
@@ -89,7 +92,11 @@ class dataProcessing(object):
                 elif i == 2:
                     file.loc[file["tag"] == dfTemp.iloc[i]["tag"], "Points"] += 5
 
-        file.sort_values(by=["Points"], inplace=True, ascending=False)
+
+
+        file.sort_values(by=["Points", "cardsEarned"], inplace=True, ascending=False)
+
+
 
 
 
