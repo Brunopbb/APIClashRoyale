@@ -1,7 +1,10 @@
+#!/usr/bin/python
+
 import pandas as pd
 import numpy as np
 import requests
 import os
+
 
 
 class Request(object):
@@ -9,6 +12,8 @@ class Request(object):
     def __init__(self):
         self.__logWarUrl = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/warlog"
         self.__infoMembers = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/members"
+        self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
+
         self.__login = {'Accept': 'application/json',
                       'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM4YjBhNGFhLTFhNmMtNDE5Mi05MGM2LTJhNDI2YmMxNzVjYSIsImlhdCI6MTU5MDMzOTc5Nywic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc2LjEzMSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.qMnGABq4K9IQZh6lsy4bKMNYCvX94qQ5HWeQVLYBPodlU-XZb4lM8LrU6HcI0y-AVjxQNQ_1hsyHHYWq3nA8gQ'}
 
@@ -17,6 +22,10 @@ class Request(object):
 
     def getInfoMembers(self):
         return requests.get(self.__infoMembers, self.__login).json()
+
+    def getCurrentWarStatus(self):
+
+        return requests.get(self.__urlCurrentWar, self.__login).json()
 
 
 class dataProcessing(object):
@@ -98,16 +107,13 @@ class dataProcessing(object):
 
 
 
-
-
-
-
-
 response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
-
 data.main()
-
 data.settingsMembers().to_csv("Members.csv")
+
+
+
+
 
