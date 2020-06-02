@@ -48,7 +48,7 @@ class dataProcessing(object):
 
     def __verificationFile(self):
 
-        if os.path.exists("/Documentos/clash/APIClashRoyale/DataFinal.csv"):
+        if os.path.exists("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv"):
             return True
         return False
 
