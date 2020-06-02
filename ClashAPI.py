@@ -48,7 +48,7 @@ class dataProcessing(object):
 
     def __verificationFile(self):
 
-        if os.path.exists("DataFinal.csv"):
+        if os.path.exists("/Documentos/clash/APIClashRoyale/DataFinal.csv"):
             return True
         return False
 
@@ -58,10 +58,10 @@ class dataProcessing(object):
 
             dfAtual = self.__addPoints()
 
-            dfFinal = pd.read_csv("DataFinal.csv").drop("Unnamed: 0", axis=1)
+            dfFinal = pd.read_csv("/Documentos/clash/APIClashRoyale/DataFinal.csv").drop("Unnamed: 0", axis=1)
             self.__verificationPlayer(dfFinal, dfAtual)
 
-            dfFinal.to_csv("DataFinal.csv")
+            dfFinal.to_csv("/Documentos/clash/APIClashRoyale/DataFinal.csv")
 
 
         else:
@@ -113,7 +113,7 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 data.main()
-data.settingsMembers().to_csv("Members.csv")
+data.settingsMembers().to_csv("/Documentos/clash/APIClashRoyale/Members.csv")
 
 
 
