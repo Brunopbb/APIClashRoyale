@@ -106,9 +106,6 @@ class dataProcessing(object):
         file.sort_values(by=["Points", "cardsEarned"], inplace=True, ascending=False)
 
 
-
-
-
 response = Request()
 
 current = response.getCurrentWarStatus()["state"]
