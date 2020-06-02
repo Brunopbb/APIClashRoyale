@@ -111,8 +111,8 @@ class dataProcessing(object):
 
 response = Request()
 
-#current = response.getCurrentWarStatus()["state"]
-current = "warDay"
+current = response.getCurrentWarStatus()["state"]
+
 control = 0
 
 file = open("stateWar.txt", "r")
