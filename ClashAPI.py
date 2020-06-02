@@ -58,10 +58,10 @@ class dataProcessing(object):
 
             dfAtual = self.__addPoints()
 
-            dfFinal = pd.read_csv("/Documentos/clash/APIClashRoyale/DataFinal.csv").drop("Unnamed: 0", axis=1)
+            dfFinal = pd.read_csv("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv").drop("Unnamed: 0", axis=1)
             self.__verificationPlayer(dfFinal, dfAtual)
 
-            dfFinal.to_csv("/Documentos/clash/APIClashRoyale/DataFinal.csv")
+            dfFinal.to_csv("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv")
 
 
         else:
@@ -69,7 +69,7 @@ class dataProcessing(object):
             self.__saveFile(self.__addPoints())
 
     def __saveFile(self, file):
-        file.to_csv("DataFinal.csv")
+        file.to_csv("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv")
 
     def __addPoints(self):
 
@@ -113,7 +113,7 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 data.main()
-data.settingsMembers().to_csv("/Documentos/clash/APIClashRoyale/Members.csv")
+data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
 
 
 
