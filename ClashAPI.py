@@ -1,7 +1,10 @@
+#!/usr/bin/python
+
 import pandas as pd
 import numpy as np
 import requests
 import os
+
 
 
 class Request(object):
@@ -9,6 +12,8 @@ class Request(object):
     def __init__(self):
         self.__logWarUrl = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/warlog"
         self.__infoMembers = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/members"
+        self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
+
         self.__login = {'Accept': 'application/json',
                       'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjgzMDNlMzliLWJkMDktNDIxNS05NzQ2LTM0MDU5YmUwMTU5NyIsImlhdCI6MTU5MTA1MDE4Nywic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTkwLjE2MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.UNxfHgpiFXv9TiqTMgD6Trou6iTevBoVMl7-PFIIsut3qlLI2jEdPR-jzU7bCrHDRn76fBo_WAJZSEesef1v0w'}
 
@@ -17,6 +22,10 @@ class Request(object):
 
     def getInfoMembers(self):
         return requests.get(self.__infoMembers, self.__login).json()
+
+    def getCurrentWarStatus(self):
+
+        return requests.get(self.__urlCurrentWar, self.__login).json()
 
 
 class dataProcessing(object):
@@ -97,11 +106,53 @@ class dataProcessing(object):
         file.sort_values(by=["Points", "cardsEarned"], inplace=True, ascending=False)
 
 
+
+
+
 response = Request()
 
-data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
+#current = response.getCurrentWarStatus()["state"]
+current = "warDay"
+control = 0
 
-data.main()
+file = open("stateWar.txt", "r")
 
-data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
+aux = file.readlines()[0].split(" ")
+file.close()
+
+file = open("stateWar.txt", "w")
+
+if current != aux[0]:
+
+    control = int(aux[1]) + 1
+
+
+    if control == 2:
+
+        control = 0
+
+        file.write(current + " " + str(control))
+
+        data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
+        data.main()
+        data.settingsMembers().to_csv("Members.csv")
+        data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
+
+    else:
+
+        file.write(current + " " + str(control))
+
+
+file.close()
+
+
+
+
+
+
+
+
+
+
+
 
