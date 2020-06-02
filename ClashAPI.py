@@ -120,9 +120,11 @@ file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "r")
 aux = file.readlines()[0].split(" ")
 file.close()
 
-file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "w")
+
 
 if current != aux[0]:
+
+    file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "w")
 
     control = int(aux[1]) + 1
 
