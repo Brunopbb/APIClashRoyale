@@ -111,9 +111,38 @@ class dataProcessing(object):
 
 response = Request()
 
-data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
-data.main()
-data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
+#current = response.getCurrentWarStatus()["state"]
+current = "warDay"
+control = 0
+
+file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "r")
+
+aux = file.readlines()[0].split(" ")
+file.close()
+
+file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "w")
+
+if current != aux[0]:
+
+    control = int(aux[1]) + 1
+
+
+    if control == 2:
+
+        control = 0
+
+        file.write(current + " " + str(control))
+
+        data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
+        data.main()
+        data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
+
+    else:
+
+        file.write(current + " " + str(control))
+
+
+file.close()
 
 
 
