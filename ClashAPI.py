@@ -111,7 +111,6 @@ class dataProcessing(object):
 
 response = Request()
 
-
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 data.main()
 data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
