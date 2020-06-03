@@ -138,6 +138,7 @@ if current != aux[0]:
 
     else:
 
+
         file.write(current + " " + str(control))
 
 
