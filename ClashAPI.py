@@ -107,8 +107,8 @@ class dataProcessing(object):
 
 
 response = Request()
-#current = response.getCurrentWarStatus()["state"]
-current = "warday"
+current = response.getCurrentWarStatus()["state"]
+
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
 control = 0
