@@ -103,12 +103,12 @@ class dataProcessing(object):
 
 
 
-        file.sort_values(by=["Points", "cardsEarned"], inplace=True, ascending=False)
+        file.sort_values(by=["Points", "wins", "cardsEarned"], inplace=True, ascending=False)
 
 
 response = Request()
-current = response.getCurrentWarStatus()["state"]
-
+#current = response.getCurrentWarStatus()["state"]
+current = "warday"
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
 control = 0
