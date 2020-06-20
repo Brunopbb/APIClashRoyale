@@ -1,1 +1,1 @@
-collectionDay 1
+collectionDay 0
