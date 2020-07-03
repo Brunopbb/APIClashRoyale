@@ -37,7 +37,7 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][2]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         dataW["Points"] = 0
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
@@ -109,7 +109,7 @@ class dataProcessing(object):
 response = Request()
 current = response.getCurrentWarStatus()["state"]
 
-#current = "CollectionDay"
+#current = "CollectionDay" //linha de debug
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
