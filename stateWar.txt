@@ -1,1 +1,1 @@
-notInWar 0
+collectionDay 1
