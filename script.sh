@@ -8,6 +8,6 @@ cd /home/bruno/Documentos/clash/APIClashRoyale/ && git commit -m "Atualização"
 
 cd /home/bruno/Documentos/clash/APIClashRoyale/ && git push origin master 
 
-date  
+date >> run.log  
 
 
