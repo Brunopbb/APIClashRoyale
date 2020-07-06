@@ -6,6 +6,6 @@ cd /home/bruno/Documentos/clash/APIClashRoyale/ && git add .
 
 cd /home/bruno/Documentos/clash/APIClashRoyale/ && git commit -m "Atualização" 
 
-cd /home/bruno/Documentos/clash/APIClashRoyale/ && git push origin master >> run.log 
+cd /home/bruno/Documentos/clash/APIClashRoyale/ && git push origin master > run.log 
 
 
