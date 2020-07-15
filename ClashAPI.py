@@ -14,7 +14,7 @@ class Request(object):
         self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
 
         self.__login = {'Accept': 'application/json',
-                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImU1Nzk3NzA0LTg0ZDctNDllNS05NTQzLThkNjc3OGJhNjA4NiIsImlhdCI6MTU5Mzc3MzM0OSwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc3LjI1NSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.4rzLo3bfriLdF4TEIq4ShvioDexe46_vF5VjP2V1LzIJYRPDQIOc4UrHkfNzzPozYIqLfaCQSpVYvqtjIpJcvg'}
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjY2OTVlMWZiLTMyOGItNGFkMS04ODdmLTVmZmFiZDAyOGJhZCIsImlhdCI6MTU5NDc2MTczMywic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc3LjI0NCIsIjE3Ny43MC4xNzcuMjU1Il0sInR5cGUiOiJjbGllbnQifV19.6bsv6I750RXlYhy6XkVboI-07BL_oHoddBPmvYjT5Lker0IEYdOxjO2ORFJhv2zor8q5aTHjpqBxEwJLV6sA3A'}
 
     def getInfoWar(self):
         return requests.get(self.__logWarUrl, self.__login).json()
@@ -108,7 +108,7 @@ class dataProcessing(object):
 response = Request()
 current = response.getCurrentWarStatus()["state"]
 
-#current = "CollectionDay" //linha de debug
+#current = "collectionDay" #linha de debug
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
