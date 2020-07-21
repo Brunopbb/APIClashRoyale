@@ -14,7 +14,7 @@ class Request(object):
         self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
 
         self.__login = {'Accept': 'application/json',
-                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImYxOWM0Zjk3LWJhNWMtNDgyNS1iOGFlLWQ2YmNkNzFmMGI4NyIsImlhdCI6MTU5NDkxMjMyNCwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTkwLjIxOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.csW1ibtCtBWOhjKuo36L4BvamR8OR-hzfco_MBXs0mE2D0r_nhEeKiEIVGYHQ44qExEKwDno6p4KEGm53WIpdA'}
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImE0NGE4ZGI1LTdmODUtNDk3My04Y2NlLTE2YTM3Y2M5ZTBiYiIsImlhdCI6MTU5NTI5NDAyOSwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc3LjIyIl0sInR5cGUiOiJjbGllbnQifV19.7eXm9LY9zEBiTuOcoi0xnsGKfMnfoh-YA2CWqR2-OBqAIrngJdPhMRlh5-XXr5QbvIAToQHh1oKIrY_XE7kgXw'}
 
     def getInfoWar(self):
         return requests.get(self.__logWarUrl, self.__login).json()
