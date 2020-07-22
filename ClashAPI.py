@@ -38,6 +38,8 @@ class dataProcessing(object):
 
         dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
+        #dataW["name"] = list(map(lambda x : str(x).lower(), dataW['name']))
+
         dataW["Points"] = 0
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
 
