@@ -14,7 +14,7 @@ class Request(object):
         self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
 
         self.__login = {'Accept': 'application/json',
-                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImE0NGE4ZGI1LTdmODUtNDk3My04Y2NlLTE2YTM3Y2M5ZTBiYiIsImlhdCI6MTU5NTI5NDAyOSwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc3LjIyIl0sInR5cGUiOiJjbGllbnQifV19.7eXm9LY9zEBiTuOcoi0xnsGKfMnfoh-YA2CWqR2-OBqAIrngJdPhMRlh5-XXr5QbvIAToQHh1oKIrY_XE7kgXw'}
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM3OGZkYmJjLTVjOWUtNDVhMy1hNjQyLTEwZWEwNjdjNjI1YiIsImlhdCI6MTU5NTc3NjQ2OCwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc3Ljk5Il0sInR5cGUiOiJjbGllbnQifV19.FFczPDyFxTYH7CYAnn_bru6c_BMG1TjH0B9HQ-bKU6xf19f_WnI27pgJMusk_rbGSQcRGIet9LePsgvSfNnrrQ'}
 
     def getInfoWar(self):
         return requests.get(self.__logWarUrl, self.__login).json()
@@ -38,9 +38,10 @@ class dataProcessing(object):
 
         dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
-        #dataW["name"] = list(map(lambda x : str(x).lower(), dataW['name']))
 
+        dataW["Trophies"] = self.settingsMembers()["trophies"]
         dataW["Points"] = 0
+
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
 
     def settingsMembers(self):
