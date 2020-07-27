@@ -5,7 +5,9 @@ import numpy as np
 import requests
 import os
 
-
+locationDataFinal = "/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv"
+locationWarStatus = "/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt"
+locationMembers = "/home/bruno/Documentos/clash/APIClashRoyale/Members.csv"
 
 class Request(object):
     def __init__(self):
@@ -36,34 +38,32 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        dataW = pd.DataFrame(self.__infoLogWar["items"][2]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
-
-        dataW["Trophies"] = self.settingsMembers()["trophies"]
         dataW["Points"] = 0
 
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
 
     def settingsMembers(self):
         members = pd.DataFrame(self.__infoMembers["items"])
-        return members.drop(["lastSeen", "role", "arena", "clanRank", "previousClanRank", "donationsReceived", "clanChestPoints"], axis=1).sort_values(by=["donations"], ascending=False)
+        return members.drop(["lastSeen", "arena", "clanRank", "previousClanRank", "donationsReceived", "clanChestPoints"], axis=1).sort_values(by=["donations"], ascending=False)
 
-    def __verificationFile(self):
+    def __verificationFile(self, file):
 
-        if os.path.exists("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv"):
+        if os.path.exists(file):
             return True
         return False
 
     def main(self):
 
-        if self.__verificationFile():
+        if self.__verificationFile(locationDataFinal):
 
             dfAtual = self.__addPoints()
 
-            dfFinal = pd.read_csv("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv").drop("Unnamed: 0", axis=1)
+            dfFinal = pd.read_csv(locationDataFinal).drop("Unnamed: 0", axis=1)
             self.__verificationPlayer(dfFinal, dfAtual)
 
-            dfFinal.to_csv("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv")
+            dfFinal.to_csv(locationDataFinal)
 
 
         else:
@@ -71,7 +71,7 @@ class dataProcessing(object):
             self.__saveFile(self.__addPoints())
 
     def __saveFile(self, file):
-        file.to_csv("/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv")
+        file.to_csv(locationDataFinal)
 
     def __addPoints(self):
 
@@ -82,6 +82,15 @@ class dataProcessing(object):
         rank.iloc[2, 4] += 5
 
         return rank
+
+    def analyze(self):
+
+        elder = self.settingsMembers()
+
+        elder = elder[elder["role"] == "elder"]
+
+        return elder
+
 
     def __verificationPlayer(self, file, dfAtual):
 
@@ -109,21 +118,21 @@ class dataProcessing(object):
 
 
 response = Request()
-current = response.getCurrentWarStatus()["state"]
-
-#current = "collectionDay" #linha de debug
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
+current = response.getCurrentWarStatus()["state"]
+#current = "warDay" #linha de debug
+
 control = 0
 
-file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "r")
+file = open(locationWarStatus, "r")
 aux = file.readlines()[0].split(" ")
 file.close()
 
 if current != aux[0]:
 
-    file = open("/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt", "w")
+    file = open(locationWarStatus, "w")
 
     control = int(aux[1]) + 1
 
@@ -133,16 +142,15 @@ if current != aux[0]:
 
         file.write(current + " " + str(control))
         data.main()
+        data.analyze()
 
     else:
 
         file.write(current + " " + str(control))
 
-data.settingsMembers().to_csv("/home/bruno/Documentos/clash/APIClashRoyale/Members.csv")
+data.settingsMembers().to_csv(locationMembers)
 
 file.close()
-
-
 
 
 
