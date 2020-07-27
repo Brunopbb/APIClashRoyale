@@ -8,6 +8,7 @@ import os
 locationDataFinal = "/home/bruno/Documentos/clash/APIClashRoyale/DataFinal.csv"
 locationWarStatus = "/home/bruno/Documentos/clash/APIClashRoyale/stateWar.txt"
 locationMembers = "/home/bruno/Documentos/clash/APIClashRoyale/Members.csv"
+locationelder = "/home/bruno/Documentos/clash/APIClashRoyale/elder.csv"
 
 class Request(object):
     def __init__(self):
@@ -89,7 +90,7 @@ class dataProcessing(object):
 
         elder = elder[elder["role"] == "elder"]
 
-        return elder
+        elder.to_csv(locationelder)
 
 
     def __verificationPlayer(self, file, dfAtual):
