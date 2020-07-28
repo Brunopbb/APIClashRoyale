@@ -90,13 +90,7 @@ class dataProcessing(object):
 
         return rank
 
-    def analyze(self):
 
-        elder = self.settingsMembers()
-
-        elder = elder[elder["role"] == "elder"]
-
-        elder.to_csv(locationelder)
 
 
     def __verificationPlayer(self, file, dfAtual):
@@ -149,14 +143,14 @@ if current != aux[0]:
 
         file.write(current + " " + str(control))
         data.main()
-        data.analyze()
+        #data.analyze()
 
     else:
 
         file.write(current + " " + str(control))
 
 data.settingsMembers().to_csv(locationMembers)
-
+#data.analyze()
 file.close()
 
 
