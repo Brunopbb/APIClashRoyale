@@ -63,6 +63,18 @@ class dataProcessing(object):
 
     def main(self):
 
+        if self.__verificationFile(locationelder):
+
+            elder = pd.read_csv(locationelder).drop(["Unnamed: 0"], axis=1)
+            self.__analyze(elder)
+
+        else:
+
+            elder = self.settingsMembers()
+            elder = elder[elder["role"] == "elder"]
+            elder["nWar"] = 0
+            self.__analyze(elder)
+
         if self.__verificationFile(locationDataFinal):
 
             dfAtual = self.__addPoints()
@@ -70,15 +82,15 @@ class dataProcessing(object):
             dfFinal = pd.read_csv(locationDataFinal).drop("Unnamed: 0", axis=1)
             self.__verificationPlayer(dfFinal, dfAtual)
 
-            dfFinal.to_csv(locationDataFinal)
 
+            self.__saveFile(dfFinal, locationDataFinal)
 
         else:
 
-            self.__saveFile(self.__addPoints())
+            self.__saveFile(self.__addPoints(), locationDataFinal)
 
-    def __saveFile(self, file):
-        file.to_csv(locationDataFinal)
+    def __saveFile(self, file, location):
+        file.to_csv(location)
 
     def __addPoints(self):
 
@@ -90,8 +102,16 @@ class dataProcessing(object):
 
         return rank
 
+    def __analyze(self, data):
 
+        aux = self.__settingsWar()
 
+        for i in range(data.shape[0]):
+
+            if data.iloc[i]["tag"] in np.array(aux["tag"]):
+                data.iloc[i, 6] += 1
+
+        self.__saveFile(data, locationelder)
 
     def __verificationPlayer(self, file, dfAtual):
 
@@ -122,8 +142,9 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
-#current = response.getCurrentWarStatus()["state"]
-current = "collectionDay" #linha de debug
+current = response.getCurrentWarStatus()["state"]
+
+#current = "collectionDay" #linha de debug
 
 control = 0
 
@@ -143,14 +164,13 @@ if current != aux[0]:
 
         file.write(current + " " + str(control))
         data.main()
-        #data.analyze()
 
     else:
 
         file.write(current + " " + str(control))
 
 data.settingsMembers().to_csv(locationMembers)
-#data.analyze()
+
 file.close()
 
 
