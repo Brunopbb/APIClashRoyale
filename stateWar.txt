@@ -1,1 +1,1 @@
-warDay 1
+notInWar 0
