@@ -41,12 +41,18 @@ class dataProcessing(object):
 
         dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
+        aux = dataW.loc[(dataW["name"] == "Bruno") | (dataW["name"] == "Candio") | (dataW["name"] == "FB.GG/Boigas")]
+        dataW.drop(aux.index, inplace=True)
         dataW["Points"] = 0
 
         return dataW.sort_values(by=["wins", "cardsEarned"], ascending=False)
 
+
     def settingsMembers(self):
+
         members = pd.DataFrame(self.__infoMembers["items"])
+        aux = members.loc[(members["name"] == "Bruno") | (members["name"] == "Candio") | (members["name"] == "FB.GG/Boigas")]
+        members.drop(aux.index, inplace=True)
         return members.drop(["lastSeen", "arena", "clanRank", "previousClanRank", "donationsReceived", "clanChestPoints"], axis=1).sort_values(by=["donations"], ascending=False)
 
     def __verificationFile(self, file):
@@ -122,8 +128,8 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
-current = response.getCurrentWarStatus()["state"]
-#current = "warDay" #linha de debug
+#current = response.getCurrentWarStatus()["state"]
+current = "collectionDay" #linha de debug
 
 control = 0
 
