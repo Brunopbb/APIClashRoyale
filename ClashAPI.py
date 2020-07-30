@@ -63,18 +63,6 @@ class dataProcessing(object):
 
     def main(self):
 
-        if self.__verificationFile(locationelder):
-
-            elder = pd.read_csv(locationelder).drop(["Unnamed: 0"], axis=1)
-            self.__analyze(elder)
-
-        else:
-
-            elder = self.settingsMembers()
-            elder = elder[elder["role"] == "elder"]
-            elder["nWar"] = 0
-            self.__analyze(elder)
-
         if self.__verificationFile(locationDataFinal):
 
             dfAtual = self.__addPoints()
@@ -88,6 +76,19 @@ class dataProcessing(object):
         else:
 
             self.__saveFile(self.__addPoints(), locationDataFinal)
+
+        if self.__verificationFile(locationelder):
+
+            elder = pd.read_csv(locationelder).drop(["Unnamed: 0"], axis=1)
+            self.__analyze(elder)
+
+        else:
+
+            elder = self.settingsMembers()
+            elder = elder[elder["role"] == "elder"]
+            elder["nWar"] = 0
+            self.__analyze(elder)
+
 
     def __saveFile(self, file, location):
         file.to_csv(location)
