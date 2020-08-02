@@ -17,7 +17,7 @@ class Request(object):
         self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
 
         self.__login = {'Accept': 'application/json',
-                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM3OGZkYmJjLTVjOWUtNDVhMy1hNjQyLTEwZWEwNjdjNjI1YiIsImlhdCI6MTU5NTc3NjQ2OCwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc3Ljk5Il0sInR5cGUiOiJjbGllbnQifV19.FFczPDyFxTYH7CYAnn_bru6c_BMG1TjH0B9HQ-bKU6xf19f_WnI27pgJMusk_rbGSQcRGIet9LePsgvSfNnrrQ'}
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjliNWMzMmVjLTM5MzctNGY2Mi05OWE0LWMwZGMzM2Q2MGY4OCIsImlhdCI6MTU5NjM0MDc3Mywic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTkwLjIzMyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.M5slXPlpbRrC9QDKUYhMll8TMPyHJCm1nrelpG1XmYBcjrVXddpD6NyDA_KuYuP-DoqU6mlzAIRIbO9-oJ3EQQ'}
 
     def getInfoWar(self):
         return requests.get(self.__logWarUrl, self.__login).json()
@@ -39,7 +39,7 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][1]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         aux = dataW.loc[(dataW["name"] == "Bruno") | (dataW["name"] == "Candio") | (dataW["name"] == "FB.GG/Boigas")]
         dataW.drop(aux.index, inplace=True)
