@@ -17,7 +17,7 @@ class Request(object):
         self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
 
         self.__login = {'Accept': 'application/json',
-                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQwZTRiZmI0LWI3NjEtNDVjNC1hOWFmLWEwMjQ3N2RlNGE3MiIsImlhdCI6MTU5NjgyMjE1Miwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTc2LjE0OSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.2tMZUqG5xArPJCydAGdqxqJCmh2M4WVptmhIhxBF03QTayW-6jzLaWzSWAdWPx5HvvzxI6wP1WuWZGzuy0dh2w'}
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImZhY2Y5MThkLWFlNzEtNDA5MS1hN2Y4LTc0ZmU3Yzc3ZTI5MCIsImlhdCI6MTU5NzAwNDkzNSwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTg5LjIyNyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.QzOmdT_J2jaRRjoXyNrKgG5r24IYtJdbvzvJkDSj3W0Bw9XH0WwkyshhGhbEbfWFYJ0n4vsN6vpnUEFTeXhjuA'}
 
     def getInfoWar(self):
         return requests.get(self.__logWarUrl, self.__login).json()
@@ -39,7 +39,7 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        dataW = pd.DataFrame(self.__infoLogWar["items"][2]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         aux = dataW.loc[(dataW["name"] == "Bruno") | (dataW["name"] == "Candio") | (dataW["name"] == "FB.GG/Boigas")]
         dataW.drop(aux.index, inplace=True)
@@ -143,9 +143,9 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
-current = response.getCurrentWarStatus()["state"]
+#current = response.getCurrentWarStatus()["state"]
 
-#current = "collectionDay" #linha de debug
+current = "collectionDay" #linha de debug
 
 control = 0
 
