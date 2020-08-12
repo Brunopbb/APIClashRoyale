@@ -39,7 +39,7 @@ class dataProcessing(object):
 
     def __settingsWar(self):
 
-        dataW = pd.DataFrame(self.__infoLogWar["items"][2]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
+        dataW = pd.DataFrame(self.__infoLogWar["items"][0]["participants"]).drop(["battlesPlayed", "collectionDayBattlesPlayed", "numberOfBattles"], axis=1)
 
         aux = dataW.loc[(dataW["name"] == "Bruno") | (dataW["name"] == "Candio") | (dataW["name"] == "FB.GG/Boigas")]
         dataW.drop(aux.index, inplace=True)
@@ -143,9 +143,9 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
-#current = response.getCurrentWarStatus()["state"]
+current = response.getCurrentWarStatus()["state"]
 
-current = "collectionDay" #linha de debug
+#current = "warDay" #linha de debug
 
 control = 0
 
