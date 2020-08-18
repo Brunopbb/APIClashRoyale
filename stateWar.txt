@@ -1,1 +1,1 @@
-warDay 0
+warDay 1
