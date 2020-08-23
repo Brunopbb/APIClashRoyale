@@ -17,7 +17,7 @@ class Request(object):
         self.__urlCurrentWar = "https://api.clashroyale.com/v1/clans/%23LR2VGVRR/currentwar"
 
         self.__login = {'Accept': 'application/json',
-                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImZhY2Y5MThkLWFlNzEtNDA5MS1hN2Y4LTc0ZmU3Yzc3ZTI5MCIsImlhdCI6MTU5NzAwNDkzNSwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTg5LjIyNyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.QzOmdT_J2jaRRjoXyNrKgG5r24IYtJdbvzvJkDSj3W0Bw9XH0WwkyshhGhbEbfWFYJ0n4vsN6vpnUEFTeXhjuAeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhjZDYxZjNlLWYxOTYtNDE3ZS1hM2QzLTRiOTg4NTIzYTFlMCIsImlhdCI6MTU5Nzk4NTA3NCwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTkwLjEzOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.0-cTWoCqK83J9u_T6IywaOSlxqYKaAF2a4YBkuT6EHdi0lcYS8w1DSIDQGGzlbfjlbZfmke__UJu67UGlRkqVA'}
+                      'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImYyODcwNDM3LWExOTctNDk0OS1iZDhlLTg3ZWViMzljNzczOCIsImlhdCI6MTU5ODE2MTIwOSwic3ViIjoiZGV2ZWxvcGVyLzc0NDE1ODZiLWYzNjktNWZhYy1iYzU4LWRmYjljMTc5OGYwZCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuNzAuMTkwLjEzOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.qLKWbNZgB3uXfAmGAk8J2WehjYnPy-wPfbpTPHZHVQMQOi3-rPGDF6xbrWSwUlkSyz_pbKgR976680iVeW63Ng'}
 
     def getInfoWar(self):
         return requests.get(self.__logWarUrl, self.__login).json()
@@ -143,9 +143,9 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
-#current = response.getCurrentWarStatus()["state"]
+current = response.getCurrentWarStatus()["state"]
 
-current = "warDay" #linha de debug
+#current = "warDay" #linha de debug
 
 control = 0
 
