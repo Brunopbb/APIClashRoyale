@@ -143,9 +143,9 @@ response = Request()
 
 data = dataProcessing(response.getInfoWar(), response.getInfoMembers())
 
-current = response.getCurrentWarStatus()["state"]
+#current = response.getCurrentWarStatus()["state"]
 
-#current = "warDay" #linha de debug
+current = "warDay" #linha de debug
 
 control = 0
 
